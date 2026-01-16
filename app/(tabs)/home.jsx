@@ -1,4 +1,6 @@
 // screens/HomeScreen.js
+import Dash from '@/src/components/homeTabs/dash';
+import Explore from '@/src/components/homeTabs/explore';
 import React, { useRef, useState } from 'react';
 import {
   Animated,
@@ -9,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import PagerView from 'react-native-pager-view';
+import ForYouPageProps from '../../src/components/homeTabs/myFeed';
 
 const { width } = Dimensions.get('window');
 
@@ -91,6 +94,7 @@ const Home = () => {
         <View key="1" style={styles.page}>
           <View style={styles.content}>
             <Text style={styles.pageTitle}>Explore</Text>
+            <Explore/>
           </View>
         </View>
 
@@ -98,6 +102,7 @@ const Home = () => {
         <View key="2" style={styles.page}>
           <View style={styles.content}>
             <Text style={styles.pageTitle}>For You</Text>
+            <ForYouPageProps/>
           </View>
         </View>
 
@@ -105,6 +110,7 @@ const Home = () => {
         <View key="3" style={styles.page}>
           <View style={styles.content}>
             <Text style={styles.pageTitle}>Friends</Text>
+            <Dash/>
           </View>
         </View>
       </PagerView>
