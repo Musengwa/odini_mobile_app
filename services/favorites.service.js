@@ -10,7 +10,7 @@ export async function getFavorites() {
     .from("favorites")
     .select(`
       id,
-      listing:listings (
+      listing:stays (
         id,
         title,
         city,
