@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import { supabase } from "../../lib/supabase";
 import { addToFavorites, getListings } from "../../services/listings.service";
+import ListingCard from "../../src/components/cards.jsx";
 
 const { width } = Dimensions.get('window');
 const CARD_MARGIN = 16;
@@ -159,90 +160,13 @@ export default function Listings() {
   );
 
   const renderListingCard = ({ item }) => (
-    <View style={styles.listingCard}>
-      <TouchableOpacity 
-        style={styles.listingImageContainer}
-        activeOpacity={0.9}
-        onPress={() => router.push(`/listings/${item.id}`)}
-      >
-        <View style={styles.listingImagePlaceholder}>
-          <Ionicons name="home-outline" size={40} color="#4A90E2" />
-        </View>
-        
-        <View style={styles.listingBadges}>
-          {item.is_active && (
-            <View style={styles.activeBadge}>
-              <Ionicons name="checkmark-circle" size={12} color="#FFF" />
-              <Text style={styles.activeBadgeText}>Active</Text>
-            </View>
-          )}
-          <View style={styles.typeBadge}>
-            <Text style={styles.typeBadgeText}>
-              {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
-            </Text>
-          </View>
-        </View>
-
-        <TouchableOpacity
-          style={styles.favoriteButton}
-          onPress={() => handleAddToFavorites(item.id, item.title)}
-          disabled={favoriteLoading[item.id]}
-        >
-          {favoriteLoading[item.id] ? (
-            <ActivityIndicator size="small" color="#FF3B30" />
-          ) : (
-            <Ionicons
-              name={item.is_favorited ? "heart" : "heart-outline"}
-              size={24}
-              color={item.is_favorited ? "#FF3B30" : "#FFF"}
-            />
-          )}
-        </TouchableOpacity>
-      </TouchableOpacity>
-
-      <View style={styles.listingInfo}>
-        <Text style={styles.listingTitle} numberOfLines={2}>
-          {item.title}
-        </Text>
-        
-        <View style={styles.locationContainer}>
-          <Ionicons name="location-outline" size={14} color="#666" />
-          <Text style={styles.listingLocation} numberOfLines={1}>
-            {item.city}, {item.country}
-          </Text>
-        </View>
-
-        {item.description && (
-          <Text style={styles.listingDescription} numberOfLines={2}>
-            {item.description}
-          </Text>
-        )}
-
-        <View style={styles.listingMeta}>
-          <View style={styles.metaItem}>
-            <Ionicons name="bed-outline" size={16} color="#666" />
-            <Text style={styles.metaText}>
-              {item.available_rooms} room{item.available_rooms !== 1 ? 's' : ''}
-            </Text>
-          </View>
-          
-          <View style={styles.metaDivider} />
-          
-          <View style={styles.metaItem}>
-            <Ionicons name="star-outline" size={16} color="#666" />
-            <Text style={styles.metaText}>4.8</Text>
-          </View>
-        </View>
-
-        <TouchableOpacity 
-          style={styles.viewDetailsButton}
-          onPress={() => router.push(`/listings/${item.id}`)}
-        >
-          <Text style={styles.viewDetailsText}>View Details</Text>
-          <Ionicons name="arrow-forward" size={16} color="#4A90E2" />
-        </TouchableOpacity>
-      </View>
-    </View>
+    <ListingCard
+      item={item}
+      onPress={() => router.push(`/listings/${item.id}`)}
+      onFavoritePress={() => handleAddToFavorites(item.id, item.title)}
+      favoriteLoading={!!favoriteLoading[item.id]}
+      styles={styles}
+    />
   );
 
   const renderEmptyState = () => (
