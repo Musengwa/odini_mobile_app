@@ -162,7 +162,7 @@ export default function Listings() {
   const renderListingCard = ({ item }) => (
     <ListingCard
       item={item}
-      onPress={() => router.push(`/listings/${item.id}`)}
+      onPress={() => router.push(`/listingScreen?listingId=${item.id}`)}
       onFavoritePress={() => handleAddToFavorites(item.id, item.title)}
       favoriteLoading={!!favoriteLoading[item.id]}
       styles={styles}
